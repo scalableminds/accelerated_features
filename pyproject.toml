@@ -15,4 +15,4 @@ dependencies = [
 
 
 [tool.setuptools.package-data]
-"*" = ["*.pth"]
+xfeat_scm = ["**/*.pt"]
