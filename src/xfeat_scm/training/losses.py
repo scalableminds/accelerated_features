@@ -1,11 +1,9 @@
 import torch
 import torch.nn.functional as F
 
-from modules.dataset.megadepth import megadepth_warper
+from ..dataset.megadepth import megadepth_warper
 
-from modules.training import utils
-
-from third_party.alike_wrapper import extract_alike_kpts
+from ..training import utils
 
 def dual_softmax_loss(X, Y, temp = 0.2):
     if X.size() != Y.size() or X.dim() != 2 or Y.dim() != 2:
@@ -72,6 +70,8 @@ def fine_loss(f1, f2, pts1, pts2, fine_module, ws=7):
 
 
 def alike_distill_loss(kpts, img):
+    #TODO: This currently fails since we do not package third_party. However this function is only required for training, which wo currently do not do!
+    from third_party.alike_wrapper import extract_alike_kpts
 
     C, H, W = kpts.shape
     kpts = kpts.permute(1,2,0) 

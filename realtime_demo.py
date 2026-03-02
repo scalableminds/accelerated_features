@@ -13,7 +13,7 @@ from time import time, sleep
 import argparse, sys, tqdm
 import threading
 
-from modules.xfeat import XFeat
+from src.xfeat_scm import XFeat
 
 def argparser():
     parser = argparse.ArgumentParser(description="Configurations for the real-time matching demo.")

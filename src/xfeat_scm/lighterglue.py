@@ -1,8 +1,13 @@
 
+import importlib.resources as resources
+
 from kornia.feature.lightglue import LightGlue
 from torch import nn
 import torch
 import os
+
+
+LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH = resources.files('xfeat_scm.weights').joinpath('xfeat-lighterglue.pt')
 
 class LighterGlue(nn.Module):
     """
@@ -26,7 +31,7 @@ class LighterGlue(nn.Module):
     "weights": None,
     }
 
-    def __init__(self, weights = os.path.abspath(os.path.dirname(__file__)) + '/../weights/xfeat-lighterglue.pt'):
+    def __init__(self, weights = LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH):
         super().__init__()
         LightGlue.default_conf = self.default_conf_xfeat
         self.net = LightGlue(None)
@@ -35,7 +40,7 @@ class LighterGlue(nn.Module):
         if os.path.exists(weights):
             state_dict = torch.load(weights, map_location=self.dev)
         else:
-            state_dict = torch.hub.load_state_dict_from_url("https://github.com/verlab/accelerated_features/raw/main/weights/xfeat-lighterglue.pt")
+            raise FileNotFoundError(f"Weights not found at {weights}!")
 
         # rename old state dict entries
         for i in range(self.net.conf.n_layers):
