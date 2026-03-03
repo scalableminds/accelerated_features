@@ -1,6 +1,6 @@
 [project]
 name = "scm-xfeat" 
-version = "0.1.3"
+version = "0.1.4"
 description = "Self-contained XFeat feature extraction model and corresponding LighterGlue matcher."
 readme = "README.md"
 requires-python = ">=3.10"

@@ -16,6 +16,11 @@ import tqdm
 from .model import *
 from .interpolator import InterpolateSparse2d
 
+try:
+	from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+	from importlib.abc import Traversable
+
 XFEAT_PRETRAINED_WEIGHTS_PATH = resources.files('scm_xfeat.weights').joinpath('xfeat.pt')
 
 class XFeat(nn.Module):
@@ -32,7 +37,7 @@ class XFeat(nn.Module):
 		self.detection_threshold = detection_threshold
 
 		if weights is not None:
-			if isinstance(weights, importlib.resources.abc.Traversable):
+			if isinstance(weights, Traversable):
 				print(f'loading weights from: {weights}')
 				self.net.load_state_dict(torch.load(weights, map_location=self.dev))
 			else:
