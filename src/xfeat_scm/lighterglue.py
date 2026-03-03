@@ -31,11 +31,13 @@ class LighterGlue(nn.Module):
     "weights": None,
     }
 
-    def __init__(self, weights = LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH):
+    def __init__(self, weights = LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH, **kwargs: float | int | bool):
         super().__init__()
+        conf = self.default_conf_xfeat
+        conf.update(kwargs)
         LightGlue.default_conf = self.default_conf_xfeat
-        self.net = LightGlue(None)
-        self.dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.net = LightGlue(None)  # type: ignore
+        self.dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         if os.path.exists(weights):
             state_dict = torch.load(weights, map_location=self.dev)
