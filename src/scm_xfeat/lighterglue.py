@@ -7,7 +7,7 @@ import torch
 import os
 
 
-LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH = resources.files('xfeat_scm.weights').joinpath('xfeat-lighterglue.pt')
+LIGHTERGLUE_PRETRAINED_WEIGHTS_PATH = resources.files('scm_xfeat.weights').joinpath('xfeat-lighterglue.pt')
 
 class LighterGlue(nn.Module):
     """

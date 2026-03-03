@@ -16,7 +16,7 @@ import tqdm
 from .model import *
 from .interpolator import InterpolateSparse2d
 
-XFEAT_PRETRAINED_WEIGHTS_PATH = resources.files('xfeat_scm.weights').joinpath('xfeat.pt')
+XFEAT_PRETRAINED_WEIGHTS_PATH = resources.files('scm_xfeat.weights').joinpath('xfeat.pt')
 
 class XFeat(nn.Module):
 	""" 

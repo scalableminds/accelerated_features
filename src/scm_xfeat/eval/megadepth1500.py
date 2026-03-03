@@ -258,12 +258,12 @@ if __name__ == '__main__':
 
     if args.matcher == 'xfeat':
         print("Running benchmark for XFeat..")
-        from src.xfeat_scm import XFeat
+        from src.scm_xfeat import XFeat
         xfeat = XFeat()
         run_pose_benchmark(matcher_fn = xfeat.match_xfeat, loader = loader, ransac_thr = args.ransac_thr)
 
     elif args.matcher == 'xfeat-star':
-        from src.xfeat_scm import XFeat
+        from src.scm_xfeat import XFeat
         print("Running benchmark for XFeat*..")
         xfeat = XFeat(top_k = 10_000)
         run_pose_benchmark(matcher_fn = xfeat.match_xfeat_star, loader = loader, ransac_thr = args.ransac_thr)

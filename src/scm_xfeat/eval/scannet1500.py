@@ -311,12 +311,12 @@ class Scannet1500:
         return aucs_by_thresh
 
 def get_xfeat():
-    from src.xfeat_scm import XFeat
+    from src.scm_xfeat import XFeat
     xfeat = XFeat()
     return xfeat.match_xfeat
 
 def get_xfeat_star():
-    from src.xfeat_scm import XFeat
+    from src.scm_xfeat import XFeat
     xfeat = XFeat(top_k=10_000)
     return xfeat.match_xfeat_star
 
