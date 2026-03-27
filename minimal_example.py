@@ -10,7 +10,7 @@ import os
 import torch
 import tqdm
 
-from modules.xfeat import XFeat
+from src.scm_xfeat import XFeat
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '' #Force CPU, comment for GPU
 

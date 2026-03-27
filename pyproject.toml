@@ -1,0 +1,18 @@
+[project]
+name = "scm-xfeat" 
+version = "0.1.4"
+description = "Self-contained XFeat feature extraction model and corresponding LighterGlue matcher."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python-headless >=4.10",
+    "poselib",
+    "kornia>=0.7.2",
+    "tqdm",
+    "gdown",
+    "torch"
+]
+
+
+[tool.setuptools.package-data]
+scm_xfeat = ["**/*.pt"]

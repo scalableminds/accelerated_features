@@ -1,5 +1,5 @@
 dependencies = ['torch']
-from modules.xfeat import XFeat as _XFeat
+from src.scm_xfeat import XFeat as _XFeat
 import torch
 
 def XFeat(pretrained=True, top_k=4096, detection_threshold=0.05):

@@ -3,6 +3,8 @@
 	"XFeat: Accelerated Features for Lightweight Image Matching, CVPR 2024."
 	https://www.verlab.dcc.ufmg.br/descriptors/xfeat_cvpr24/
 """
+import importlib
+import importlib.resources as resources
 
 import numpy as np
 import os
@@ -11,8 +13,15 @@ import torch.nn.functional as F
 
 import tqdm
 
-from modules.model import *
-from modules.interpolator import InterpolateSparse2d
+from .model import *
+from .interpolator import InterpolateSparse2d
+
+try:
+	from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+	from importlib.abc import Traversable
+
+XFEAT_PRETRAINED_WEIGHTS_PATH = resources.files('scm_xfeat.weights').joinpath('xfeat.pt')
 
 class XFeat(nn.Module):
 	""" 
@@ -20,7 +29,7 @@ class XFeat(nn.Module):
 		It supports inference for both sparse and semi-dense feature extraction & matching.
 	"""
 
-	def __init__(self, weights = os.path.abspath(os.path.dirname(__file__)) + '/../weights/xfeat.pt', top_k = 4096, detection_threshold=0.05):
+	def __init__(self, weights = XFEAT_PRETRAINED_WEIGHTS_PATH, top_k = 4096, detection_threshold=0.05):
 		super().__init__()
 		self.dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 		self.net = XFeatModel().to(self.dev).eval()
@@ -28,8 +37,8 @@ class XFeat(nn.Module):
 		self.detection_threshold = detection_threshold
 
 		if weights is not None:
-			if isinstance(weights, str):
-				print('loading weights from: ' + weights)
+			if isinstance(weights, Traversable):
+				print(f'loading weights from: {weights}')
 				self.net.load_state_dict(torch.load(weights, map_location=self.dev))
 			else:
 				self.net.load_state_dict(weights)
@@ -142,7 +151,7 @@ class XFeat(nn.Module):
 		if not self.kornia_available:
 			raise RuntimeError('We rely on kornia for LightGlue. Install with: pip install kornia')
 		elif self.lighterglue is None:
-			from modules.lighterglue import LighterGlue
+			from src.lighterglue import LighterGlue
 			self.lighterglue = LighterGlue()
 
 		data = {
